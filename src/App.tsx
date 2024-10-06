@@ -16,6 +16,12 @@ const App: Component = () => {
   const [showLiveFeed, setShowLiveFeed] = createSignal(true);
   const [isModelLoading, setIsModelLoading] = createSignal(true);
 
+  const [isPortrait, setIsPortrait] = createSignal(window.innerHeight > window.innerWidth);
+
+  const handleResize = () => {
+    setIsPortrait(window.innerHeight > window.innerWidth);
+  };
+
   const isMobile = () => {
     return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   };
@@ -23,10 +29,20 @@ const App: Component = () => {
   const setupCamera = async () => {
     try {
       const constraints = {
-        video: { facingMode: currentFacingMode() }
+        video: { 
+          facingMode: currentFacingMode(),
+          aspectRatio: isPortrait() ? 3/4 : 4/3
+        }
       };
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
-      if (videoRef) videoRef.srcObject = stream;
+      if (videoRef) {
+        videoRef.srcObject = stream;
+        videoRef.onloadedmetadata = () => {
+          if (videoRef) {
+            videoRef.play();
+          }
+        };
+      }
       setIsMobileDevice(isMobile());
     } catch (error: any) {
       setErrorMessage('Error accessing camera: ' + error.message);
@@ -123,8 +139,13 @@ const App: Component = () => {
   });
 
   onMount(() => {
+    window.addEventListener('resize', handleResize);
     setupCamera();
     loadModel();
+  });
+
+  onCleanup(() => {
+    window.removeEventListener('resize', handleResize);
   });
 
   return (
@@ -134,7 +155,7 @@ const App: Component = () => {
         <div class={styles.loadingIndicator}>Loading model... Please wait.</div>
       ) : (
         <>
-          <div class={styles.imageContainer}>
+          <div class={`${styles.imageContainer} ${isPortrait() ? styles.portrait : ''}`}>
             <video
               ref={videoRef}
               autoplay
