@@ -1,4 +1,4 @@
-import { Component, createSignal, createEffect, onMount, onCleanup } from 'solid-js';
+import { Component, createSignal, createEffect, onMount, onCleanup, Show } from 'solid-js';
 import * as tf from '@tensorflow/tfjs';
 import styles from './App.module.css';
 
@@ -29,9 +29,9 @@ const App: Component = () => {
   const setupCamera = async () => {
     try {
       const constraints = {
-        video: { 
+        video: {
           facingMode: currentFacingMode(),
-          aspectRatio: isPortrait() ? 3/4 : 4/3
+          aspectRatio: isPortrait() ? 3 / 4 : 4 / 3
         }
       };
       const stream = await navigator.mediaDevices.getUserMedia(constraints);
@@ -196,15 +196,17 @@ const App: Component = () => {
             <button onClick={reset} disabled={!beforeImageCapture() || isModelLoading()}>Reset</button>
             {isMobileDevice() && <button onClick={switchCamera} disabled={isModelLoading()}>Switch Camera</button>}
           </div>
-          <div class={styles.similarityContainer}>
-            <div
-              class={styles.similarityIndicator}
-              style={{
-                "background-color": similarity() <= 0.5 ? '#d93025' : similarity() <= 0.7 ? '#f9ab00' : '#1e8e3e'
-              }}
-            ></div>
-            <span class={styles.similarityScore}>Similarity: {Math.round(similarity() * 100)}%</span>
-          </div>
+          <Show when={beforeImageCapture()}>
+            <div class={styles.similarityContainer}>
+              <div
+                class={styles.similarityIndicator}
+                style={{
+                  "background-color": similarity() <= 0.5 ? '#d93025' : similarity() <= 0.7 ? '#f9ab00' : '#1e8e3e'
+                }}
+              ></div>
+              <span class={styles.similarityScore}>Similarity: {Math.round(similarity() * 100)}%</span>
+            </div>
+          </Show>
         </>
       )}
       {errorMessage() && <div class={styles.errorMessage}>{errorMessage()}</div>}
