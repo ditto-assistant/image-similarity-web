@@ -16,8 +16,8 @@ importers:
         version: 1.9.3
     devDependencies:
       solid-devtools:
-        specifier: ^0.29.3
-        version: 0.29.3(solid-js@1.9.3)(vite@5.4.10(@types/node@22.7.4))
+        specifier: ^0.30.1
+        version: 0.30.1(solid-js@1.9.3)(vite@5.4.10(@types/node@22.7.4))
       typescript:
         specifier: ^5.6.2
         version: 5.6.3
@@ -853,8 +853,8 @@ packages:
     resolution: {integrity: sha512-rqEO6FZk8mv7Hyv4UCj3FD3b6Waqft605TLfsCe/BiaylRpyyMC0b+uA5TJKawX3KzMrdi3wsLbCaLplrQmBvQ==}
     engines: {node: '>=10'}
 
-  solid-devtools@0.29.3:
-    resolution: {integrity: sha512-9j3VxVbEoC54ML22gAMytR8ZS1nk9xKatsWziKSkI4c/Bcyh4sxQBGESHuXSLs9xaxpyGVTmFl3hknoxEpKzlA==}
+  solid-devtools@0.30.1:
+    resolution: {integrity: sha512-axpXL4JV1dnGhuei+nSGS8ewGeNkmIgFDsAlO90YyYY5t8wU1R0aYAQtL+I+5KICLKPBvfkzdcFa2br7AV4lAw==}
     peerDependencies:
       solid-js: ^1.8.0
       solid-start: ^0.3.0
@@ -1888,7 +1888,7 @@ snapshots:
 
   seroval@1.1.1: {}
 
-  solid-devtools@0.29.3(solid-js@1.9.3)(vite@5.4.10(@types/node@22.7.4)):
+  solid-devtools@0.30.1(solid-js@1.9.3)(vite@5.4.10(@types/node@22.7.4)):
     dependencies:
       '@babel/core': 7.25.7
       '@babel/plugin-syntax-typescript': 7.25.7(@babel/core@7.25.7)
